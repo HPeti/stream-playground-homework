@@ -18,7 +18,7 @@ public class Homework1 {
      * Returns whether there is at least one country with the word "island" in its name ignoring case.
      */
     public boolean streamPipeline1() {
-        return countries.stream().map(Country::getName).anyMatch(nev -> nev.toLowerCase().contains("island"));
+        return countries.stream().map(Country::getName).anyMatch(n -> n.toLowerCase().contains("island"));
     }
 
     /**
@@ -46,7 +46,7 @@ public class Homework1 {
      * Prints the names of the first ten least populous countries.
      */
     public void streamPipeline5() {
-        countries.stream().sorted(Comparator.comparingLong(Country::getPopulation)).limit(10).forEach(System.out::println);
+        countries.stream().sorted(Comparator.comparingLong(c -> c.getPopulation())).map(Country::getName).limit(10).forEach(System.out::println);
     }
 
     /**
