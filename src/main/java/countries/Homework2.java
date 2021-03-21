@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
 import static java.util.stream.Collectors.*;
 
 import java.time.ZoneId;
+import java.util.function.Function;
 
 public class Homework2 {
 
@@ -53,54 +55,81 @@ public class Homework2 {
      * Prints single word country names (i.e., country names that do not contain any space characters).
      */
     public void streamPipeline4() {
-        countries.stream().map(Country::getName).filter(n -> !n.contains(" ")).forEach(System.out::println);
+        countries.stream()
+                .map(Country::getName)
+                .filter(n -> !n.contains(" "))
+                .forEach(System.out::println);
     }
 
     /**
      * Returns the country name with the most number of words.
      */
     public Optional<String> streamPipeline5() {
-        return countries.stream().max(Comparator.comparingInt(c -> c.getName().split(" ").length)).map(Country::getName);
+        return countries.stream()
+                .max(Comparator.comparingInt(c -> c.getName().split(" ").length))
+                .map(Country::getName);
     }
 
     /**
      * Returns whether there exists at least one capital that is a palindrome.
      */
     public boolean streamPipeline6() {
-        // TODO
-        return false;
-    }
+        return countries.stream()
+                .map(Country::getCapital)
+                .anyMatch(n -> n.toLowerCase().equals(new StringBuilder(n).reverse().toString()));
 
+    }
+    private int charCount(String s, char c){
+        int count = 0;
+        for (char item : s.toCharArray()) {
+            if (item == c)
+                count++;
+        }
+        return count;
+    }
     /**
      * Returns the country name with the most number of {@code 'e'} characters ignoring case.
      */
     public Optional<String> streamPipeline7() {
-        // TODO
-        return null;
+        return countries.stream()
+                .map(Country::getName)
+                .max(Comparator.comparingInt(n -> charCount(n, 'e')));
     }
 
+    private int vowelCount(String s){
+        return charCount(s, 'a') +
+                charCount(s, 'e') +
+                charCount(s, 'i') +
+                charCount(s, 'o') +
+                charCount(s, 'u');
+    }
     /**
      *  Returns the capital with the most number of English vowels (i.e., {@code 'a'}, {@code 'e'}, {@code 'i'}, {@code 'o'}, {@code 'u'}).
      */
     public Optional<String> streamPipeline8() {
-        // TODO
-        return null;
+        return countries.stream()
+                .map(Country::getCapital)
+                .max(Comparator.comparingInt(n -> vowelCount(n)));
     }
 
     /**
      * Returns a map that contains for each character the number of occurrences in country names ignoring case.
      */
     public Map<Character, Long> streamPipeline9() {
-        // TODO
-        return null;
+        return countries.stream()
+                .map(Country::getName)
+                .flatMap(name -> name.chars().mapToObj(c -> (char)c))
+                .collect(groupingBy(Function.identity(), counting()));
     }
 
     /**
      * Returns a map that contains the number of countries for each possible timezone.
      */
     public Map<ZoneId, Long> streamPipeline10() {
-        // TODO
-        return null;
+        return countries.stream()
+                .map(Country::getTimezones)
+                .flatMap(times -> times.stream())
+                .collect(groupingBy(Function.identity(), counting()));
     }
 
     /**
