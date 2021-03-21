@@ -3,10 +3,7 @@ package countries;
 import java.io.IOException;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 import static java.util.stream.Collectors.*;
@@ -118,7 +115,7 @@ public class Homework2 {
     public Map<Character, Long> streamPipeline9() {
         return countries.stream()
                 .map(Country::getName)
-                .flatMap(name -> name.chars().mapToObj(c -> (char)c))
+                .flatMap(name -> name.toLowerCase().chars().mapToObj(c -> (char)c))
                 .collect(groupingBy(Function.identity(), counting()));
     }
 
@@ -136,8 +133,11 @@ public class Homework2 {
      * Returns the number of country names by region that starts with their two-letter country code ignoring case.
      */
     public Map<Region, Long> streamPipeline11() {
-        // TODO
-        return null;
+       return countries.stream()
+               .filter(c -> c.getCode().equalsIgnoreCase(c.getName().substring(0,2)))
+               .collect(groupingBy(c -> c.getRegion(), counting()));
+
+
     }
 
     /**
