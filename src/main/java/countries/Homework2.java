@@ -159,7 +159,8 @@ public class Homework2 {
      * Returns the list of capitals by region whose name is the same is the same as the name of their country.
      */
     public Map<Region, List<String>> streamPipeline14() {
-        // TODO
+        //countries.stream().collect(groupingBy(c -> c.getRegion(), filtering(c -> c.getCapital() == c.getName(), toList())));
+        //countries.stream().collect(groupingBy(c -> c.getRegion(), mapping(Country::getCapital, toList())));
         return null;
     }
 
@@ -167,7 +168,11 @@ public class Homework2 {
      *  Returns a map of country name-population density pairs.
      */
     public Map<Region, Double> streamPipeline15() {
-        // TODO
+        /*
+        return countries.stream()
+                .collect(toMap(Country::getRegion,
+                        c -> BigDecimal.valueOf(c.getPopulation()).divide(c.getArea(), ).doubleValue()));
+         */
         return null;
     }
 
