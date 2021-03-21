@@ -152,8 +152,7 @@ public class Homework2 {
      * Returns a map that contains for each country code the name of the corresponding country in Portuguese ({@code "pt"}).
      */
     public Map<String, String> streamPipeline13() {
-        // TODO
-        return null;
+        return countries.stream().collect(toMap(c -> c.getCode(), p -> p.getTranslations().get("pt")));
     }
 
     /**
