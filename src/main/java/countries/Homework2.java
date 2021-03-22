@@ -78,7 +78,7 @@ public class Homework2 {
     }
     private int charCount(String s, char c){
         int count = 0;
-        for (char item : s.toCharArray()) {
+        for (char item : s.toLowerCase().toCharArray()) {
             if (item == c)
                 count++;
         }
@@ -136,8 +136,6 @@ public class Homework2 {
        return countries.stream()
                .filter(c -> c.getCode().equalsIgnoreCase(c.getName().substring(0,2)))
                .collect(groupingBy(c -> c.getRegion(), counting()));
-
-
     }
 
     /**
