@@ -157,9 +157,11 @@ public class Homework2 {
      * Returns the list of capitals by region whose name is the same is the same as the name of their country.
      */
     public Map<Region, List<String>> streamPipeline14() {
-        //countries.stream().collect(groupingBy(c -> c.getRegion(), filtering(c -> c.getCapital() == c.getName(), toList())));
-        //countries.stream().collect(groupingBy(c -> c.getRegion(), mapping(Country::getCapital, toList())));
-        return null;
+        return countries.stream()
+                .collect(groupingBy(c -> c.getRegion(),
+                            filtering(c -> c.getCapital() == c.getName(), mapping(Country::getCapital, toList()))
+
+                ));
     }
 
     /**
