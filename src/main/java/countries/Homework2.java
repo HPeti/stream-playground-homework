@@ -3,6 +3,7 @@ package countries;
 import java.io.IOException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 
@@ -164,16 +165,22 @@ public class Homework2 {
                 ));
     }
 
+
+    private static double divideOrNull(double szam, BigDecimal oszto){
+        if (oszto == null){
+            return Double.NaN;
+        }
+        else{
+            return BigDecimal.valueOf(szam).divide(oszto, 64, RoundingMode.HALF_EVEN).doubleValue();
+        }
+    }
+
     /**
      *  Returns a map of country name-population density pairs.
      */
-    public Map<Region, Double> streamPipeline15() {
-        /*
+    public Map<String, Double> streamPipeline15() {
         return countries.stream()
-                .collect(toMap(Country::getRegion,
-                        c -> BigDecimal.valueOf(c.getPopulation()).divide(c.getArea(), ).doubleValue()));
-         */
-        return null;
+                .collect(toMap(Country::getName, c -> divideOrNull(c.getPopulation(), c.getArea())));
     }
 
 }
